@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Purrfect Match - Find Your Perfect Pet</title>
+<meta name="description" content="Find your purrfect pet match! Browse adoptable dogs and cats from Valley Humane Society in Pleasanton, CA. Take our compatibility quiz and discover your ideal companion.">
+<style>
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #f8f6f3; color: #2d2d2d; line-height: 1.6; }
+
+:root {
+  --teal: #2ec4b6;
+  --teal-dark: #1a9e92;
+  --coral: #ff6b6b;
+  --peach: #ffb4a2;
+  --gold: #ffd166;
+  --lavender: #b8a9c9;
+  --mint: #e8f8f5;
+  --cream: #fdf8f0;
+  --dark: #1e293b;
+  --gray: #64748b;
+  --light-gray: #f1f5f9;
+}
+
+input[name="page"] { display: none; }
+.pg { display: none; }
+#pg-home:checked ~ .pg-home,
+#pg-find:checked ~ .pg-find,
+#pg-events:checked ~ .pg-events,
+#pg-wishlist:checked ~ .pg-wishlist,
+#pg-faq:checked ~ .pg-faq,
+#pg-quiz:checked ~ .pg-quiz,
+#pg-mission:checked ~ .pg-mission,
+#pg-stories:checked ~ .pg-stories,
+#pg-tips:checked ~ .pg-tips,
+#pg-checklist:checked ~ .pg-checklist,
+#pg-signup:checked ~ .pg-signup { display: block; }
+
+input#menu-toggle { display: none; }
+.menu-btn { display: none; width: 36px; height: 36px; cursor: pointer; flex-direction: column; justify-content: center; align-items: center; gap: 5px; background: #f4f6f8; border-radius: 8px; padding: 8px; }
+.menu-btn span { display: block; width: 20px; height: 2.5px; background: var(--dark); border-radius: 2px; }
+
+.topbar { background: #fff; border-bottom: 1px solid #e8e8e8; padding: 6px 24px; display: flex; align-items: center; justify-content: flex-end; gap: 16px; font-size: 12px; color: var(--gray); }
+.topbar label { cursor: pointer; font-weight: 500; }
+.topbar .signin { background: var(--teal); color: #fff; padding: 4px 14px; border-radius: 16px; font-weight: 600; cursor: pointer; }
+
+header { background: #fff; padding: 12px 24px; display: flex; align-items: center; gap: 20px; box-shadow: 0 2px 20px rgba(0,0,0,0.04); position: sticky; top: 0; z-index: 100; flex-wrap: wrap; }
+.logo { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.logo svg { width: 44px; height: 44px; }
+.logo-text { font-size: 20px; font-weight: 800; color: var(--teal-dark); }
+.logo-text em { font-style: normal; color: var(--coral); }
+.tagline { font-size: 10px; color: var(--gray); font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; margin-top: -2px; }
+
+nav { display: flex; gap: 2px; flex-wrap: wrap; flex: 1; justify-content: center; }
+nav label { padding: 8px 14px; border-radius: 8px; font-size: 13px; font-weight: 600; color: var(--gray); cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+nav label:hover { background: var(--mint); color: var(--teal-dark); }
+#pg-home:checked ~ header nav label[for="pg-home"],
+#pg-find:checked ~ header nav label[for="pg-find"],
+#pg-events:checked ~ header nav label[for="pg-events"],
+#pg-wishlist:checked ~ header nav label[for="pg-wishlist"],
+#pg-faq:checked ~ header nav label[for="pg-faq"],
+#pg-mission:checked ~ header nav label[for="pg-mission"],
+#pg-stories:checked ~ header nav label[for="pg-stories"] { background: var(--teal); color: #fff; }
+
+.header-search { display: flex; align-items: center; background: #f4f6f8; border-radius: 24px; padding: 8px 16px; gap: 8px; width: 200px; flex-shrink: 0; }
+.header-search svg { width: 15px; height: 15px; color: #9ca3af; flex-shrink: 0; }
+.header-search input { border: none; background: none; outline: none; font-size: 13px; width: 100%; }
+
+@media (max-width: 768px) {
+  .menu-btn { display: flex; }
+  nav { display: none; flex-direction: column; width: 100%; background: #fff; padding: 10px 0; border-top: 1px solid #eee; }
+  #menu-toggle:checked ~ header nav { display: flex; }
+  .header-search { width: 100%; order: 10; }
+  .find-layout { flex-direction: column !important; }
+  .sidebar { width: 100% !important; position: static !important; }
+  .hero h1 { font-size: 34px !important; }
+  .detail-top { flex-direction: column !important; }
+  .detail-gallery { width: 100% !important; }
+  .roadmap-track::before { display: none !important; }
+}
+
+.back-nav { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--teal-dark); cursor: pointer; margin: 16px 24px 0; padding: 8px 16px; background: #fff; border-radius: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+.back-nav:hover { background: var(--mint); }
+
+.hero { background: linear-gradient(160deg, #e8f8f5 0%, #fdf8f0 40%, #fce7f3 100%); padding: 70px 24px 60px; text-align: center; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -50px; right: -50px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(46,196,182,0.1) 0%, transparent 70%); border-radius: 50%; }
+.hero h1 { font-size: 50px; font-weight: 900; color: var(--dark); margin-bottom: 12px; position: relative; }
+.hero h1 span { background: linear-gradient(135deg, var(--teal), var(--teal-dark)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero-sub { font-size: 18px; color: var(--gray); max-width: 550px; margin: 0 auto 28px; position: relative; }
+.hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; position: relative; }
+.hero-btns label { padding: 14px 32px; border-radius: 28px; font-weight: 700; font-size: 15px; cursor: pointer; transition: all 0.2s; }
+.btn-fill { background: linear-gradient(135deg, var(--teal), var(--teal-dark)); color: #fff; box-shadow: 0 6px 20px rgba(46,196,182,0.3); }
+.btn-fill:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(46,196,182,0.4); }
+.btn-outline { background: #fff; color: var(--teal-dark); border: 2px solid var(--teal); }
+.btn-outline:hover { background: var(--mint); }
+.hero-stats { display: flex; justify-content: center; gap: 40px; margin-top: 40px; position: relative; }
+.hero-stat { text-align: center; }
+.hero-stat .num { font-size: 28px; font-weight: 800; color: var(--teal-dark); }
+.hero-stat .lbl { font-size: 12px; color: var(--gray); }
+
+.roadmap { padding: 60px 24px; max-width: 1000px; margin: 0 auto; }
+.section-title { text-align: center; font-size: 30px; font-weight: 800; margin-bottom: 8px; }
+.section-title span { color: var(--teal); }
+.section-sub { text-align: center; color: var(--gray); font-size: 14px; margin-bottom: 36px; }
+.roadmap-track { display: flex; align-items: flex-start; justify-content: space-between; position: relative; flex-wrap: wrap; gap: 16px; }
+.roadmap-track::before { content: ''; position: absolute; top: 28px; left: 40px; right: 40px; height: 3px; background: linear-gradient(90deg, var(--teal), var(--gold), var(--coral)); border-radius: 2px; z-index: 0; }
+.rm-step { text-align: center; flex: 1; min-width: 100px; position: relative; z-index: 1; }
+.rm-dot { width: 56px; height: 56px; border-radius: 50%; background: #fff; border: 3px solid var(--teal); display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 24px; box-shadow: 0 4px 12px rgba(46,196,182,0.15); }
+.rm-step h4 { font-size: 12px; font-weight: 700; color: var(--dark); }
+.rm-step p { font-size: 10px; color: var(--gray); }
+
+.find-layout { display: flex; gap: 24px; max-width: 1200px; margin: 0 auto; padding: 30px 24px; }
+.sidebar { width: 260px; flex-shrink: 0; position: sticky; top: 80px; align-self: flex-start; }
+.sidebar-card { background: #fff; border-radius: 16px; padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.04); margin-bottom: 16px; }
+.sidebar-card h3 { font-size: 14px; font-weight: 700; color: var(--dark); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+.filter-item { margin-bottom: 12px; }
+.filter-item label { font-size: 11px; font-weight: 600; color: var(--gray); text-transform: uppercase; letter-spacing: 0.04em; display: block; margin-bottom: 4px; }
+.filter-item select { width: 100%; padding: 8px 10px; border: 1.5px solid #e5e7eb; border-radius: 8px; font-size: 12px; background: #fafafa; cursor: pointer; }
+.sidebar-search { display: flex; align-items: center; background: #f4f6f8; border-radius: 10px; padding: 8px 12px; gap: 6px; margin-bottom: 14px; }
+.sidebar-search svg { width: 14px; height: 14px; color: #9ca3af; }
+.sidebar-search input { border: none; background: none; outline: none; font-size: 12px; width: 100%; }
+.quiz-cta { display: block; background: linear-gradient(135deg, var(--teal), var(--teal-dark)); color: #fff; padding: 14px; border-radius: 12px; text-align: center; cursor: pointer; }
+.quiz-cta h4 { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+.quiz-cta p { font-size: 11px; opacity: 0.85; }
+
+.main-content { flex: 1; min-width: 0; }
+.main-content > h2 { font-size: 22px; font-weight: 800; margin-bottom: 16px; }
+
+.pet-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+.pet-card { background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 3px 14px rgba(0,0,0,0.05); transition: all 0.2s; cursor: pointer; position: relative; display: block; color: inherit; text-decoration: none; }
+.pet-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,0.1); }
+.pet-img-wrap { position: relative; height: 180px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.pet-img-wrap .emoji { font-size: 72px; }
+.img-dots { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); display: flex; gap: 4px; }
+.img-dots span { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.6); }
+.img-dots span:first-child { background: #fff; }
+.match-pill { position: absolute; top: 10px; right: 10px; background: rgba(46,196,182,0.95); color: #fff; padding: 4px 10px; border-radius: 14px; font-size: 11px; font-weight: 700; }
+.heart-btn { position: absolute; top: 10px; left: 10px; width: 30px; height: 30px; background: rgba(255,255,255,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.heart-btn svg { width: 15px; height: 15px; fill: var(--coral); }
+.pet-body { padding: 14px; }
+.pet-name { font-size: 16px; font-weight: 700; color: var(--dark); }
+.pet-breed { font-size: 12px; color: var(--gray); margin-bottom: 4px; }
+.pet-dist { font-size: 11px; color: var(--teal-dark); font-weight: 600; margin-bottom: 6px; }
+.pet-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.pet-fee { font-size: 12px; font-weight: 700; color: var(--dark); background: #f1f5f9; padding: 2px 8px; border-radius: 6px; }
+.pet-chips { display: flex; gap: 4px; flex-wrap: wrap; }
+.chip { padding: 3px 8px; border-radius: 6px; font-size: 10px; font-weight: 600; }
+.chip-energy { background: #fef3c7; color: #92400e; }
+.chip-size { background: #e8f8f5; color: #065f46; }
+.chip-gender { background: #ede9fe; color: #5b21b6; }
+.chip-age { background: #fce7f3; color: #9d174d; }
+.add-wishlist { display: block; margin-top: 10px; padding: 7px 0; text-align: center; background: #fff5f5; color: var(--coral); border-radius: 8px; font-size: 11px; font-weight: 700; cursor: pointer; transition: all 0.15s; }
+.add-wishlist:hover { background: var(--coral); color: #fff; }
+.view-profile { display: block; margin-top: 6px; padding: 7px 0; text-align: center; background: var(--mint); color: var(--teal-dark); border-radius: 8px; font-size: 11px; font-weight: 700; }
+
+.detail-wrap { max-width: 960px; margin: 0 auto; padding: 20px 24px; }
+.detail-top { display: flex; gap: 28px; flex-wrap: wrap; margin-bottom: 28px; }
+.detail-gallery { width: 380px; flex-shrink: 0; }
+.detail-main-img { width: 100%; height: 300px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 120px; margin-bottom: 10px; }
+.detail-thumbs { display: flex; gap: 8px; }
+.detail-thumbs span { width: 60px; height: 60px; border-radius: 10px; background: #f1f5f9; display: flex; align-items: center; justify-content: center; font-size: 28px; border: 2px solid transparent; cursor: pointer; }
+.detail-thumbs span:first-child { border-color: var(--teal); }
+.detail-right { flex: 1; min-width: 280px; }
+.detail-right h1 { font-size: 28px; font-weight: 800; margin-bottom: 2px; }
+.detail-right .breed-line { font-size: 14px; color: var(--gray); margin-bottom: 14px; }
+.match-box { background: linear-gradient(135deg, #e8f8f5, #d1fae5); padding: 14px 18px; border-radius: 12px; display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+.match-ring { width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.match-ring-inner { background: #fff; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: var(--teal-dark); }
+.match-info h4 { font-size: 13px; font-weight: 700; color: var(--teal-dark); }
+.match-info p { font-size: 11px; color: var(--gray); }
+.attrs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 16px; }
+.attr-item { padding: 10px; background: #f8fafc; border-radius: 8px; }
+.attr-item .al { font-size: 10px; color: var(--gray); text-transform: uppercase; font-weight: 600; }
+.attr-item .av { font-size: 13px; font-weight: 700; color: var(--dark); }
+.detail-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+.detail-actions a, .detail-actions span { padding: 10px 20px; border-radius: 20px; font-size: 13px; font-weight: 700; cursor: pointer; display: inline-block; text-decoration: none; }
+.story-section { background: #fff; border-radius: 14px; padding: 22px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); margin-bottom: 16px; }
+.story-section h3 { font-size: 16px; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+.story-section p { font-size: 13px; color: var(--gray); line-height: 1.7; }
+.shelter-contact { background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 12px; padding: 16px; display: flex; align-items: center; gap: 14px; margin-top: 16px; }
+.shelter-icon { width: 44px; height: 44px; background: var(--mint); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+.shelter-info h4 { font-size: 13px; font-weight: 700; }
+.shelter-info p { font-size: 11px; color: var(--gray); }
+.shelter-info a { font-size: 11px; color: var(--teal-dark); font-weight: 600; text-decoration: none; }
+.shelter-info a:hover { text-decoration: underline; }
+
+.quiz-wrap { max-width: 680px; margin: 0 auto; padding: 40px 24px; }
+.quiz-wrap h2 { text-align: center; font-size: 26px; font-weight: 800; margin-bottom: 6px; }
+.quiz-wrap > p { text-align: center; color: var(--gray); margin-bottom: 28px; font-size: 14px; }
+.q-card { background: #fff; border-radius: 14px; padding: 22px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+.q-card h3 { font-size: 14px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+.q-num { background: var(--teal); color: #fff; width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; }
+.q-opts { display: flex; flex-direction: column; gap: 8px; }
+.q-opt { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border: 2px solid #f1f5f9; border-radius: 10px; cursor: pointer; transition: all 0.15s; }
+.q-opt:hover { border-color: var(--teal); background: var(--mint); }
+.q-opt input[type="radio"] { accent-color: var(--teal); width: 16px; height: 16px; cursor: pointer; }
+.q-opt span { font-size: 13px; }
+.quiz-btn { display: block; margin: 20px auto 0; padding: 14px 36px; background: linear-gradient(135deg, var(--teal), var(--teal-dark)); color: #fff; border-radius: 24px; font-size: 15px; font-weight: 700; cursor: pointer; text-align: center; width: fit-content; }
+
+.events-wrap { max-width: 1000px; margin: 0 auto; padding: 40px 24px; }
+.ev-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+.ev-card { background: #fff; border-radius: 14px; padding: 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.04); border-top: 4px solid var(--teal); transition: all 0.2s; }
+.ev-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
+.ev-card:nth-child(2) { border-top-color: var(--coral); }
+.ev-card:nth-child(3) { border-top-color: var(--lavender); }
+.ev-card:nth-child(4) { border-top-color: var(--gold); }
+.ev-date { display: inline-block; background: #f1f5f9; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; color: var(--gray); margin-bottom: 10px; }
+.ev-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.ev-card p { font-size: 12px; color: var(--gray); margin-bottom: 10px; line-height: 1.6; }
+.ev-tag { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 10px; font-weight: 600; background: var(--mint); color: var(--teal-dark); }
+
+.stories-wrap, .tips-wrap, .check-wrap, .faq-wrap, .mission-wrap, .signup-wrap, .wishlist-wrap { max-width: 800px; margin: 0 auto; padding: 40px 24px; }
+.story-card { background: #fff; border-radius: 14px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.04); display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+.story-img { width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(135deg, var(--mint), #fef3c7); display: flex; align-items: center; justify-content: center; font-size: 48px; flex-shrink: 0; }
+.story-text { flex: 1; min-width: 200px; }
+.story-text h3 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+.story-text .adopter { font-size: 12px; color: var(--teal-dark); font-weight: 600; margin-bottom: 6px; }
+.story-text p { font-size: 13px; color: var(--gray); line-height: 1.6; }
+
+.tip-card { background: #fff; border-radius: 12px; padding: 18px 20px; margin-bottom: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.03); display: flex; align-items: flex-start; gap: 14px; }
+.tip-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--mint); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+.tip-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.tip-card p { font-size: 12px; color: var(--gray); line-height: 1.5; }
+
+.check-item { background: #fff; border-radius: 10px; padding: 14px 18px; margin-bottom: 10px; display: flex; align-items: center; gap: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.03); }
+.check-item input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--teal); cursor: pointer; flex-shrink: 0; }
+.check-item span { font-size: 13px; font-weight: 500; }
+
+details { background: #fff; border-radius: 12px; margin-bottom: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
+details summary { padding: 16px 20px; font-weight: 700; font-size: 14px; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+details summary::-webkit-details-marker { display: none; }
+details summary::after { content: '+'; font-size: 18px; color: var(--teal); font-weight: 700; }
+details[open] summary::after { content: '−'; }
+details[open] summary { border-bottom: 1px solid #f1f5f9; }
+.faq-ans { padding: 14px 20px; font-size: 13px; color: var(--gray); line-height: 1.7; }
+
+.mission-wrap { text-align: center; }
+.mission-wrap h2 { font-size: 28px; font-weight: 800; margin-bottom: 16px; }
+.mission-wrap h2 span { color: var(--teal); }
+.mission-intro { font-size: 15px; color: var(--gray); line-height: 1.8; margin-bottom: 20px; text-align: center; }
+.mission-values { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 30px; }
+.value-card { background: #fff; border-radius: 14px; padding: 24px; width: 200px; box-shadow: 0 2px 10px rgba(0,0,0,0.04); text-align: center; }
+.value-card .v-icon { font-size: 32px; margin-bottom: 10px; }
+.value-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.value-card p { font-size: 11px; color: var(--gray); }
+
+.signup-card { background: #fff; border-radius: 16px; padding: 32px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); max-width: 440px; margin: 0 auto; }
+.signup-card h2 { font-size: 22px; font-weight: 800; margin-bottom: 4px; text-align: center; }
+.signup-card .sub { font-size: 13px; color: var(--gray); text-align: center; margin-bottom: 24px; }
+.form-group { margin-bottom: 16px; }
+.form-group label { font-size: 12px; font-weight: 600; color: var(--dark); display: block; margin-bottom: 4px; }
+.form-group input { width: 100%; padding: 10px 14px; border: 1.5px solid #e5e7eb; border-radius: 10px; font-size: 13px; outline: none; }
+.form-group input:focus { border-color: var(--teal); }
+.signup-btn { display: block; width: 100%; padding: 12px; background: linear-gradient(135deg, var(--teal), var(--teal-dark)); color: #fff; border: none; border-radius: 10px; font-size: 14px; font-weight: 700; cursor: pointer; margin-top: 8px; text-align: center; }
+
+.services-strip { background: #fff; padding: 30px 24px; border-top: 1px solid #f1f5f9; }
+.services-inner { max-width: 1000px; margin: 0 auto; display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; }
+.svc { text-align: center; }
+.svc .svc-icon { font-size: 28px; margin-bottom: 6px; }
+.svc h4 { font-size: 12px; font-weight: 700; color: var(--dark); }
+.svc p { font-size: 10px; color: var(--gray); }
+
+footer { background: var(--dark); color: #94a3b8; padding: 40px 24px 20px; }
+.footer-inner { max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 30px; }
+.footer-col h4 { color: #fff; font-size: 14px; margin-bottom: 10px; }
+.footer-col p, .footer-col label { font-size: 12px; color: #94a3b8; display: block; margin-bottom: 6px; cursor: pointer; }
+.footer-col label:hover { color: var(--teal); }
+.footer-disclaimer { max-width: 1000px; margin: 20px auto 0; padding-top: 16px; border-top: 1px solid #334155; font-size: 11px; color: #64748b; text-align: center; line-height: 1.6; }
+.footer-bottom { text-align: center; margin-top: 12px; font-size: 11px; max-width: 1000px; margin-left: auto; margin-right: auto; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .pet-card { animation: rise 0.4s ease-out both; }
+  .pet-card:nth-child(2) { animation-delay: 0.05s; }
+  .pet-card:nth-child(3) { animation-delay: 0.1s; }
+  .pet-card:nth-child(4) { animation-delay: 0.15s; }
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+}
+
+    .pet-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 18px 18px 0 0;
+    }
+    .detail-main-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 18px;
+    }
+    .detail-thumbs img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+/* Dynamic page support */
+.pg-find, #pet-detail-page { display: none; }
+#pg-find:checked ~ .pg-find { display: block; }
+#pg-find:checked ~ #pet-detail-page { display: none; }
+.pet-card { cursor: pointer; }
+.pet-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+.detail-main-img img { width: 100%; height: 100%; object-fit: cover; border-radius: 18px; }
+.detail-thumbs img { width: 60px; height: 60px; object-fit: cover; border-radius: 10px; cursor: pointer; }
+.db-badge { text-align: center; padding: 12px; font-size: 11px; color: var(--gray); background: var(--light-gray); border-top: 1px solid #e5e7eb; }
+.db-badge a { color: var(--teal-dark); text-decoration: none; font-weight: 600; }
+
+</style>
+</head>
+<body>
+
+<input type="radio" name="page" id="pg-home" checked>
+<input type="radio" name="page" id="pg-find">
+<input type="radio" name="page" id="pg-events">
+<input type="radio" name="page" id="pg-wishlist">
+<input type="radio" name="page" id="pg-faq">
+<input type="radio" name="page" id="pg-quiz">
+<input type="radio" name="page" id="pg-mission">
+<input type="radio" name="page" id="pg-stories">
+<input type="radio" name="page" id="pg-tips">
+<input type="radio" name="page" id="pg-checklist">
+<input type="radio" name="page" id="pg-signup">
+
+<input id="menu-toggle" type="checkbox">
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <label for="pg-tips">🐾 New Pet Parent?</label>
+  <label for="pg-checklist">✅ Ready Checklist</label>
+  <label for="pg-signup" class="signin">Sign Up / Sign In</label>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    <svg viewBox="0 0 50 50" fill="none">
+      <circle cx="25" cy="25" r="24" fill="#2ec4b6"/>
+      <ellipse cx="15" cy="14" rx="4.5" ry="5.5" fill="#fff"/>
+      <ellipse cx="35" cy="14" rx="4.5" ry="5.5" fill="#fff"/>
+      <ellipse cx="9" cy="26" rx="3.5" ry="4.5" fill="#fff"/>
+      <ellipse cx="41" cy="26" rx="3.5" ry="4.5" fill="#fff"/>
+      <ellipse cx="25" cy="33" rx="10" ry="9" fill="#fff"/>
+      <path d="M21 35 Q25 39 29 35" stroke="#2ec4b6" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <circle cx="22" cy="31" r="1.5" fill="#ffb4a2"/>
+      <circle cx="28" cy="31" r="1.5" fill="#ffb4a2"/>
+    </svg>
+    <div>
+      <div class="logo-text">The Purrfect <em>Match</em></div>
+      <div class="tagline">Where Every Pet Finds Their Person</div>
+    </div>
+  </div>
+  <label for="menu-toggle" class="menu-btn"><span></span><span></span><span></span></label>
+  <nav>
+    <label for="pg-home">Home</label>
+    <label for="pg-find">Find a Pet</label>
+    <label for="pg-events">Events</label>
+    <label for="pg-stories">Stories</label>
+    <label for="pg-wishlist">♥ Wishlist</label>
+    <label for="pg-mission">Our Mission</label>
+    <label for="pg-faq">FAQ</label>
+  </nav>
+  <div class="header-search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" placeholder="Search pets, breeds...">
+  </div>
+</header>
+
+
+
+<!-- ========== HOME PAGE ========== -->
+<div class="pg pg-home">
+  <div class="hero">
+    <h1>Find Your <span>Purrfect Match</span></h1>
+    <p class="hero-sub">Take our compatibility quiz and discover the pet that fits your lifestyle. Every pet deserves a loving home — let's find yours.</p>
+    <div class="hero-btns">
+      <label for="pg-quiz" class="btn-fill">🐾 Take the Quiz</label>
+      <label for="pg-find" class="btn-outline">Browse All Pets</label>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num">2,400+</div><div class="lbl">Pets Available</div></div>
+      <div class="hero-stat"><div class="num">850+</div><div class="lbl">Happy Adoptions</div></div>
+      <div class="hero-stat"><div class="num">12</div><div class="lbl">Partner Shelters</div></div>
+    </div>
+  </div>
+
+  <div class="roadmap">
+    <div class="section-title">Your <span>Adoption Journey</span></div>
+    <p class="section-sub">From quiz to cuddles — here's how it works</p>
+    <div class="roadmap-track">
+      <div class="rm-step"><div class="rm-dot">📝</div><h4>Take Quiz</h4><p>Lifestyle questions</p></div>
+      <div class="rm-step"><div class="rm-dot">💕</div><h4>Get Matches</h4><p>See compatibility</p></div>
+      <div class="rm-step"><div class="rm-dot">📹</div><h4>Meet & Greet</h4><p>Virtual or in-person</p></div>
+      <div class="rm-step"><div class="rm-dot">📋</div><h4>Apply</h4><p>Simple application</p></div>
+      <div class="rm-step"><div class="rm-dot">🏠</div><h4>Welcome Home!</h4><p>Your new family</p></div>
+    </div>
+  </div>
+
+  <!-- REAL PETS FROM VALLEY HUMANE -->
+  <div style="max-width:1100px;margin:0 auto;padding:0 24px 40px;">
+    <div class="section-title" style="text-align:left;font-size:24px;margin-bottom:6px;">Meet Our <span>Adoptable Pets</span></div>
+    <p style="color:var(--gray);font-size:13px;margin-bottom:20px;">Real pets currently available at Valley Humane Society, Pleasanton</p>
+    <div class="pet-grid">
+      <label for="pg-detail-doritos" class="pet-card">
+        <div class="pet-img-wrap" style="background:linear-gradient(135deg,#fef3c7,#fce7f3);"><img src="https://valleyhumane.org/wp-content/uploads/2026/04/Doritos-2-225x300.jpg" alt="Doritos - Mixed Breed Puppy" loading="lazy"><div class="img-dots"><span></span><span></span><span></span></div></div>
+        <div class="match-pill">90% Match</div>
+        <div class="heart-btn"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>
+        <div class="pet-body">
+          <div class="pet-name">Doritos 🌶️</div>
+          <div class="pet-breed">Mixed Breed Puppy • 5 months • 13 lbs</div>
+          <div class="pet-dist">📍 Valley Humane Society, Pleasanton</div>
+          <div class="pet-meta"><span class="pet-fee">$250</span></div>
+          <div class="pet-chips"><span class="chip chip-energy">⚡ Playful</span><span class="chip chip-size">Small</span><span class="chip chip-age">Puppy</span></div>
+          <div class="add-wishlist">♥ Add to Wishlist</div>
+          <div class="view-profile">View Full Profile →</div>
+        </div>
+      </label>
+      <label for="pg-detail-bean" class="pet-card">
+        <div class="pet-img-wrap" style="background:linear-gradient(135deg,#e8f8f5,#ede9fe);"><img src="https://valleyhumane.org/wp-content/uploads/2026/04/PXL_20260228_215731648.PORTRAIT-771x1024.jpg" alt="Bean - Mixed Breed Dog" loading="lazy"><div class="img-dots"><span></span><span></span></div></div>
+        <div class="match-pill">87% Match</div>
+        <div class="heart-btn"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>
+        <div class="pet-body">
+          <div class="pet-name">Bean 🫘</div>
+          <div class="pet-breed">White Mixed Breed • 10 lbs • Fluffy Coat</div>
+          <div class="pet-dist">📍 Valley Humane Society, Pleasanton</div>
+          <div class="pet-meta"><span class="pet-fee">$200</span></div>
+          <div class="pet-chips"><span class="chip chip-energy">😌 Gentle</span><span class="chip chip-size">Small</span><span class="chip chip-gender">Long-stay</span></div>
+          <div class="add-wishlist">♥ Add to Wishlist</div>
+          <div class="view-profile">View Full Profile →</div>
+        </div>
+      </label>
+      <label for="pg-detail-tim" class="pet-card">
+        <div class="pet-img-wrap" style="background:linear-gradient(135deg,#fce7f3,#e8f8f5);"><img src="https://valleyhumane.org/wp-content/uploads/2026/05/Tim-Drake-747x1024.jpg" alt="Tim Drake - Mixed Breed Dog" loading="lazy"><div class="img-dots"><span></span><span></span></div></div>
+        <div class="match-pill">85% Match</div>
+        <div class="heart-btn"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>
+        <div class="pet-body">
+          <div class="pet-name">Tim Drake 🦸</div>
+          <div class="pet-breed">Mixed Breed • 10 lbs • Found as stray</div>
+          <div class="pet-dist">📍 Valley Humane Society, Pleasanton</div>
+          <div class="pet-meta"><span class="pet-fee">$250</span></div>
+          <div class="pet-chips"><span class="chip chip-energy">🌟 Adventurous</span><span class="chip chip-size">Small</span><span class="chip chip-age">Young</span></div>
+          <div class="add-wishlist">♥ Add to Wishlist</div>
+          <div class="view-profile">View Full Profile →</div>
+        </div>
+      </label>
+      <label for="pg-detail-tessa" class="pet-card">
+        <div class="pet-img-wrap" style="background:linear-gradient(135deg,#ede9fe,#fef3c7);"><img src="https://valleyhumane.org/wp-content/uploads/2026/02/bc_sq-1024x1024.jpg" alt="Tessa - Barefoot Contessa" loading="lazy"><div class="img-dots"><span></span><span></span><span></span></div></div>
+        <div class="match-pill">92% Match</div>
+        <div class="heart-btn"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>
+        <div class="pet-body">
+          <div class="pet-name">Tessa (Barefoot Contessa) 👑</div>
+          <div class="pet-breed">Dog • Great with all ages • In foster care</div>
+          <div class="pet-dist">📍 Valley Humane Society (Foster Home)</div>
+          <div class="pet-meta"><span class="pet-fee">Sponsored! $0</span></div>
+          <div class="pet-chips"><span class="chip chip-energy">🌤️ Balanced</span><span class="chip chip-size">Medium</span><span class="chip chip-gender">♀ Female</span></div>
+          <div class="add-wishlist">♥ Add to Wishlist</div>
+          <div class="view-profile">View Full Profile →</div>
+        </div>
+      </label>
+    </div>
+  </div>
+
+  <div class="services-strip">
+    <div class="services-inner">
+      <div class="svc"><div class="svc-icon">📋</div><h4>Dog Licensing</h4><p>Help with registration</p></div>
+      <div class="svc"><div class="svc-icon">💬</div><h4>Pet Counseling</h4><p>Behavioral support</p></div>
+      <div class="svc"><div class="svc-icon">🏥</div><h4>Vet Referrals</h4><p>Trusted local vets</p></div>
+      <div class="svc"><div class="svc-icon">📚</div><h4>Training Resources</h4><p>New parent guides</p></div>
+      <div class="svc"><div class="svc-icon">🤝</div><h4>Adoption Assistance</h4><p>Expert guidance</p></div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-col"><h4>🐾 The Purrfect Match</h4><p>Connecting loving homes with pets in the Pleasanton & Bay Area community since 2026.</p></div>
+      <div class="footer-col"><h4>Explore</h4><label for="pg-find">Find a Pet</label><label for="pg-events">Events</label><label for="pg-stories">Success Stories</label><label for="pg-mission">Our Mission</label></div>
+      <div class="footer-col"><h4>Resources</h4><label for="pg-tips">New Pet Parent Tips</label><label for="pg-checklist">Ready Checklist</label><label for="pg-faq">FAQ</label><p>hello@thepurrfectmatch.com</p></div>
+      <div class="footer-col"><h4>Partner Shelters</h4><p>Valley Humane Society</p><p>East Bay SPCA</p><p>SF SPCA</p><p>Joybound</p></div>
+    </div>
+    <div class="footer-disclaimer">Disclaimer: Pet availability is subject to change. Please contact the shelter directly to confirm. The Purrfect Match facilitates connections between adopters and partner shelters — all adoptions are processed through our partner organizations.</div>
+    <div class="footer-bottom">© 2026 The Purrfect Match. All rights reserved. Serving Pleasanton, Dublin, Livermore & the Bay Area.</div>
+  </footer>
+</div>
+
+
+
+<!-- ========== FIND A PET (DYNAMIC) ========== -->
+<div class="pg pg-find">
+  <label for="pg-home" class="back-nav">← Back to Home</label>
+  <div class="find-layout">
+    <div class="sidebar">
+      <div class="sidebar-card">
+        <h3>🔍 Search</h3>
+        <div class="sidebar-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" id="pet-search" placeholder="Pet name or breed..." oninput="filterPets()">
+        </div>
+        <h3>🎯 Filters</h3>
+        <div class="filter-item"><label>Species</label><select id="filter-species" onchange="filterPets()"><option value="">All Pets</option><option value="dog">Dogs</option><option value="cat">Cats</option></select></div>
+        <div class="filter-item"><label>Size</label><select id="filter-size" onchange="filterPets()"><option value="">Any Size</option><option value="Small">Small</option><option value="Medium">Medium</option><option value="Large">Large</option></select></div>
+        <div class="filter-item"><label>Age</label><select id="filter-age" onchange="filterPets()"><option value="">Any Age</option><option value="Puppy">Puppy/Kitten</option><option value="Young">Young</option><option value="Adult">Adult</option></select></div>
+      </div>
+      <div class="quiz-cta" onclick="document.getElementById('pg-quiz').checked=true"><h4>✨ Try Our Quiz!</h4><p>Get personalized matches</p></div>
+    </div>
+    <div class="main-content">
+      <h2>Available at <span style="color:var(--teal);">Valley Humane Society</span></h2>
+      <div id="pet-grid" class="pet-grid">
+        <div style="text-align:center;padding:40px;color:var(--gray);">
+          <div style="font-size:32px;margin-bottom:12px;">⏳</div>
+          <p>Loading pets from database...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== PET DETAIL (DYNAMIC TEMPLATE) ========== -->
+<div class="pg pg-detail" id="pet-detail-page" style="display:none;">
+  <span class="back-nav" onclick="hideDetail()">← Back to All Pets</span>
+  <div class="detail-wrap">
+    <div class="detail-top">
+      <div class="detail-gallery">
+        <div class="detail-main-img" id="detail-img"></div>
+        <div class="detail-thumbs" id="detail-thumbs"></div>
+      </div>
+      <div class="detail-right">
+        <h1 id="detail-name"></h1>
+        <div class="breed-line" id="detail-breed"></div>
+        <div class="match-box">
+          <div class="match-ring" id="detail-ring"><div class="match-ring-inner" id="detail-score"></div></div>
+          <div class="match-info"><h4 id="detail-match-title"></h4><p id="detail-match-text"></p></div>
+        </div>
+        <div class="attrs-grid" id="detail-attrs"></div>
+        <div class="detail-actions" id="detail-actions"></div>
+      </div>
+    </div>
+    <div class="story-section">
+      <h3 id="detail-story-title"></h3>
+      <p id="detail-story"></p>
+    </div>
+    <div class="shelter-contact">
+      <div class="shelter-icon">🏠</div>
+      <div class="shelter-info">
+        <h4 id="detail-shelter-name"></h4>
+        <p id="detail-shelter-info">3670 Nevada Street, Pleasanton, CA • (925) 426-8656 • Tues–Sat 10am–4pm</p>
+        <a href="https://valleyhumane.org/adopt/" target="_blank">Browse all adoptable pets →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== EVENTS ========== -->
+<div class="pg pg-events">
+  <label for="pg-home" class="back-nav">← Back to Home</label>
+  <div class="events-wrap">
+    <h2 class="section-title">Upcoming <span>Events</span></h2>
+    <p class="section-sub">Join us for fun community events and meet your future furry friend!</p>
+    <div class="ev-grid">
+      <div class="ev-card">
+        <div class="ev-date">📅 June 21, 2026 • 10am–2pm</div>
+        <h3>🐾 Adoption Day at Pleasanton Farmers Market</h3>
+        <p>Meet adoptable pets in person! Our team will be at the Pleasanton Farmers Market with several of our adorable residents looking for their forever homes.</p>
+        <span class="ev-tag">🐶 Dogs & Puppies</span>
+      </div>
+      <div class="ev-card">
+        <div class="ev-date">📅 June 28, 2026 • 11am–3pm</div>
+        <h3>🎉 Puppy Socialization Party</h3>
+        <p>Bring your newly adopted puppy for a free socialization session! Professional trainers will be on hand to answer questions and help puppies make friends.</p>
+        <span class="ev-tag">🎓 Training</span>
+      </div>
+      <div class="ev-card">
+        <div class="ev-date">📅 July 12, 2026 • 9am–12pm</div>
+        <h3>🏃 5K Paws for a Cause Run</h3>
+        <p>Run or walk with your dog (or without!) to raise funds for Valley Humane Society's medical care program. All fitness levels welcome!</p>
+        <span class="ev-tag">🏅 Fundraiser</span>
+      </div>
+      <div class="ev-card">
+        <div class="ev-date">📅 July 19, 2026 • 2pm–5pm</div>
+        <h3>📸 Pet Portrait Day</h3>
+        <p>Professional photographer on site for adorable pet portraits! $25 per session with proceeds supporting shelter animals' veterinary care.</p>
+        <span class="ev-tag">📷 Photo Event</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- ========== WISHLIST ========== -->
+<div class="pg pg-wishlist">
+  <label for="pg-home" class="back-nav">← Back to Home</label>
+  <div class="wishlist-wrap">
+    <h2 class="section-title">Your <span>Wishlist</span></h2>
+    <p class="section-sub">Pets you've saved will appear here. Start browsing and tap ♥ to save!</p>
+    <div style="text-align:center;padding:60px 20px;">
+      <div style="font-size:64px;margin-bottom:16px;">💕</div>
+      <h3 style="font-size:18px;font-weight:700;margin-bottom:8px;">No saved pets yet</h3>
+      <p style="font-size:13px;color:var(--gray);margin-bottom:20px;">Browse our available pets and click the heart to save your favorites here.</p>
+      <label for="pg-find" class="btn-fill" style="display:inline-block;padding:12px 28px;border-radius:24px;font-size:14px;font-weight:700;cursor:pointer;">Browse Pets →</label>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- ========== FAQ ========== -->
+<div class="pg pg-faq">
+  <label for="pg-home" class="back-nav">← Back to Home</label>
+  <div class="faq-wrap">
+    <h2 class="section-title">Frequently Asked <span>Questions</span></h2>
+    <p class="section-sub">Everything you need to know about adopting through The Purrfect Match</p>
+    <details>
+      <summary>How does the adoption process work?</summary>
+      <div class="faq-ans">Our process is simple! Browse available pets, take our compatibility quiz to find your match, then submit an adoption application through our partner shelter (Valley Humane Society). A counselor will review your application and schedule a meet-and-greet. Most adoptions are completed within 3–7 days.</div>
+    </details>
+    <details>
+      <summary>What's included in the adoption fee?</summary>
+      <div class="faq-ans">All pets come spayed/neutered, microchipped, and up-to-date on vaccinations. Dogs receive a rabies vaccine, DHPP, and bordetella. Cats receive FVRCP and rabies. A free initial vet checkup within 14 days is also included.</div>
+    </details>
+    <details>
+      <summary>Can I adopt if I live in an apartment?</summary>
+      <div class="faq-ans">Absolutely! Many of our pets thrive in apartments. During the matching process, we consider your living space and recommend pets that will be comfortable. Smaller, lower-energy pets often make wonderful apartment companions.</div>
+    </details>
+    <details>
+      <summary>What if the pet doesn't work out?</summary>
+      <div class="faq-ans">We want every adoption to be successful, but we understand that sometimes it doesn't work out. Valley Humane Society has a 30-day return policy where you can bring the pet back with no questions asked. We also offer free behavioral consultations to help resolve common adjustment issues.</div>
+    </details>
+    <details>
+      <summary>How accurate is the compatibility quiz?</summary>
+      <div class="faq-ans">Our quiz considers your living situation, activity level, experience with pets, and preferences to suggest the best matches. While it's a great starting point, we always recommend meeting the pet in person. Our adoption counselors can also provide personalized guidance!</div>
+    </details>
+    <details>
+      <summary>Are there any requirements to adopt?</summary>
+      <div class="faq-ans">You must be at least 18 years old, have valid ID, and provide proof of residence. If you rent, landlord approval for pets is required. We also ask that all current pets be up-to-date on vaccinations. A brief home environment review is part of the process.</div>
+    </details>
+    <details>
+      <summary>Do you have cats and other animals too?</summary>
+      <div class="faq-ans">Yes! While our current featured pets are dogs, Valley Humane Society and our partner shelters also have cats, rabbits, guinea pigs, and occasionally other small animals available. Check back often as our listings update regularly.</div>
+    </details>
+  </div>
+</div>
+
+
+
+<!-- ========== QUIZ ========== -->
+<div class="pg pg-quiz">
+  <label for="pg-home" class="back-nav">← Back to Home</label>
+  <div class="quiz-wrap">
+    <h2>🐾 Find Your Perfect Pet Match</h2>
+    <p>Answer these quick questions and we'll recommend the best pet for your lifestyle!</p>
+
+    <div class="q-card">
+      <h3><span class="q-num">1</span> What's your living situation?</h3>
+      <div class="q-opts">
+        <label class="q-opt"><input type="radio" name="q1" value="apt"><span>🏢 Apartment / Condo</span></label>
+        <label class="q-opt"><input type="radio" name="q1" value="house-small"><span>🏠 House with small yard</span></label>
+        <label class="q-opt"><input type="radio" name="q1" value="house-big"><span>🏡 House with large yard</span></label>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <h3><span class="q-num">2</span> How active is your lifestyle?</h3>
+      <div class="q-opts">
+        <label class="q-opt"><input type="radio" name="q2" value="chill"><span>🛋️ Homebody — love my couch time</span></label>
+        <label class="q-opt"><input type="radio" name="q2" value="moderate"><span>🚶 Moderate — daily walks & weekend outings</span></label>
+        <label class="q-opt"><input type="radio" name="q2" value="active"><span>🏃 Very active — hiking, running, adventures!</span></label>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <h3><span class="q-num">3</span> Do you have experience with pets?</h3>
+      <div class="q-opts">
+        <label class="q-opt"><input type="radio" name="q3" value="first"><span>🌱 First-time pet parent</span></label>
+        <label class="q-opt"><input type="radio" name="q3" value="some"><span>🐕 Had pets growing up</span></label>
+        <label class="q-opt"><input type="radio" name="q3" value="experienced"><span>🏆 Experienced pet owner</span></label>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <h3><span class="q-num">4</span> How much time can you dedicate daily?</h3>
+      <div class="q-opts">
+        <label class="q-opt"><input type="radio" name="q4" value="busy"><span>⏰ 1–2 hours (busy schedule)</span></label>
+        <label class="q-opt"><input type="radio" name="q4" value="moderate"><span>🕐 2–4 hours (work from home sometimes)</span></label>
+        <label class="q-opt"><input type="radio" name="q4" value="lots"><span>🏠 4+ hours (home often or retired)</span></label>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <h3><span class="q-num">5</span> What energy level do you prefer?</h3>
+      <div class="q-opts">
+        <label class="q-opt"><input type="radio" name="q5" value="calm"><span>😌 Calm & cuddly</span></label>
+        <label class="q-opt"><input type="radio" name="q5" value="balanced"><span>🌤️ Balanced — playful but can chill</span></label>
+        <label class="q-opt"><input type="radio" name="q5" value="high"><span>⚡ High energy — always ready to go!</span></label>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <h3><span class="q-num">6</span> Any other household members?</h3>
+      <div class="q-opts">
+        <label class="q-opt"><input type="radio" name="q6" value="solo"><span>👤 Just me</span></label>
+        <label class="q-opt"><input type="radio" name="q6" value="partner"><span>👫 Me and a partner</span></label>
+        <label class="q-opt"><input type="radio" name="q6" value="family"><span>👨‍👩‍👧 Family with kids</span></label>
+        <label class="q-opt"><input type="radio" name="q6" value="pets"><span>🐾 Already have other pets</span></label>
+      </div>
+    </div>
+
+    <label for="pg-find" class="quiz-btn">See My Matches! 🎉</label>
+  </div>
+</div>
+
+
+
+<!-- ========== MISSION ========== -->
+<div class="pg pg-mission">
+  <label for="pg-home" class="back-nav">← Back to Home</label>
+  <div class="mission-wrap">
+    <h2>Our <span>Mission</span></h2>
+    <p class="mission-intro">The Purrfect Match was born from a simple belief: every pet deserves a loving home, and every person deserves the joy of the right companion. We partner with local shelters in the Pleasanton & Bay Area to make the adoption journey easier, smarter, and more joyful.</p>
+    <p class="mission-intro">Through our compatibility matching, community events, and educational resources, we help bridge the gap between adoptable pets and the families who will love them best.</p>
+    <div class="mission-values">
+      <div class="value-card"><div class="v-icon">💚</div><h4>Compassion First</h4><p>Every decision starts with the wellbeing of animals</p></div>
+      <div class="value-card"><div class="v-icon">🤝</div><h4>Community</h4><p>Building connections between shelters, volunteers & adopters</p></div>
+      <div class="value-card"><div class="v-icon">🔬</div><h4>Smart Matching</h4><p>Using data & care to find the right fit for everyone</p></div>
+      <div class="value-card"><div class="v-icon">📚</div><h4>Education</h4><p>Empowering pet parents with knowledge & resources</p></div>
+      <div class="value-card"><div class="v-icon">🌟</div><h4>Transparency</h4><p>Honest info about every pet's needs & background</p></div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- ========== SUCCESS STORIES ========== -->
+<div class="pg pg-stories">
+  <label for="pg-home" class="back-nav">← Back to Home</label>
+  <div class="stories-wrap">
+    <h2 class="section-title">Success <span>Stories</span></h2>
+    <p class="section-sub">Happy tails from families who found their purrfect match!</p>
+    <div class="story-card">
+      <div class="story-img">🐕</div>
+      <div class="story-text">
+        <h3>Max Found His Forever Home!</h3>
+        <div class="adopter">Adopted by the Garcia Family • March 2026</div>
+        <p>"We took the quiz expecting just a fun time, but we were matched with Max and it was love at first sight! He's the perfect energy level for our family with two kids. He plays fetch all morning and naps all afternoon. Couldn't have asked for a better fit."</p>
+      </div>
+    </div>
+    <div class="story-card">
+      <div class="story-img">🐱</div>
+      <div class="story-text">
+        <h3>Luna the Shy Cat Blossomed</h3>
+        <div class="adopter">Adopted by Sarah T. • January 2026</div>
+        <p>"Luna was listed as a shy cat who needed patience. As a WFH introvert, I was her perfect match! Within a week she was sleeping on my keyboard during meetings. The compatibility quiz really works — she's exactly what I needed."</p>
+      </div>
+    </div>
+    <div class="story-card">
+      <div class="story-img">🐶</div>
+      <div class="story-text">
+        <h3>Buddy's Second Chance</h3>
+        <div class="adopter">Adopted by James & Nina • February 2026</div>
+        <p>"Buddy was a senior dog that most people overlooked. We found him through the site and he's been the most gentle, grateful companion. He loves his morning walks around the neighborhood and is friends with every dog on the block!"</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- ========== TIPS ========== -->
+<div class="pg pg-tips">
+  <label for="pg-home" class="back-nav">← Back to Home</label>
+  <div class="tips-wrap">
+    <h2 class="section-title">New Pet Parent <span>Tips</span></h2>
+    <p class="section-sub">Essential advice for making your new pet's transition smooth and happy</p>
+    <div class="tip-card">
+      <div class="tip-icon">🏠</div>
+      <div><h4>Pet-Proof Your Home</h4><p>Secure loose wires, remove toxic plants, and put away small objects that could be swallowed. Create a safe space with a bed, water, and toys before your pet arrives.</p></div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🕐</div>
+      <div><h4>Give Them Time to Adjust</h4><p>The "3-3-3 Rule": 3 days to decompress, 3 weeks to learn your routine, 3 months to feel at home. Be patient — it's a big transition!</p></div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🩺</div>
+      <div><h4>Schedule a Vet Visit</h4><p>Visit your vet within the first week. Bring adoption paperwork and any medical records from the shelter. Establish a care routine early.</p></div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">📅</div>
+      <div><h4>Establish a Routine</h4><p>Pets thrive on consistency. Set regular times for meals, walks, play, and sleep. A predictable schedule reduces anxiety and builds trust.</p></div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🎓</div>
+      <div><h4>Start Training Early</h4><p>Use positive reinforcement! Short 5-minute training sessions work best. Focus on basics: sit, stay, come, and leash manners.</p></div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">❤️</div>
+      <div><h4>Be Patient with Setbacks</h4><p>Accidents happen, things get chewed, sleep gets disrupted. It's all normal! Celebrate progress and remember every day gets a little easier.</p></div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- ========== CHECKLIST ========== -->
+<div class="pg pg-checklist">
+  <label for="pg-home" class="back-nav">← Back to Home</label>
+  <div class="check-wrap">
+    <h2 class="section-title">Adoption Readiness <span>Checklist</span></h2>
+    <p class="section-sub">Make sure you're prepared before bringing your new friend home! ✓</p>
+    <div class="check-item"><input type="checkbox"><span>🏠 Home is pet-proofed (wires secured, toxins removed)</span></div>
+    <div class="check-item"><input type="checkbox"><span>🛏️ Pet bed or crate set up in a quiet area</span></div>
+    <div class="check-item"><input type="checkbox"><span>🍽️ Food & water bowls purchased</span></div>
+    <div class="check-item"><input type="checkbox"><span>🥫 Age-appropriate food (ask shelter for brand recommendations)</span></div>
+    <div class="check-item"><input type="checkbox"><span>🦮 Collar, leash, and ID tag ready</span></div>
+    <div class="check-item"><input type="checkbox"><span>🧸 Toys for enrichment and play</span></div>
+    <div class="check-item"><input type="checkbox"><span>🩺 Vet appointment scheduled within first week</span></div>
+    <div class="check-item"><input type="checkbox"><span>🚗 Secure transport plan (crate or seatbelt harness)</span></div>
+    <div class="check-item"><input type="checkbox"><span>👨‍👩‍👧 All household members on board and prepared</span></div>
+    <div class="check-item"><input type="checkbox"><span>📋 Landlord approval obtained (if renting)</span></div>
+    <div class="check-item"><input type="checkbox"><span>💰 Budget planned for ongoing food, vet, and supplies</span></div>
+    <div class="check-item"><input type="checkbox"><span>🐾 Other pets' vaccinations are current (if applicable)</span></div>
+    <div class="check-item"><input type="checkbox"><span>📖 Read the "New Pet Parent Tips" page</span></div>
+    <div class="check-item"><input type="checkbox"><span>❤️ Ready to give love, patience, and a forever home!</span></div>
+  </div>
+</div>
+
+
+
+<!-- ========== SIGN UP ========== -->
+<div class="pg pg-signup">
+  <label for="pg-home" class="back-nav">← Back to Home</label>
+  <div class="signup-wrap">
+    <div class="signup-card">
+      <h2>🐾 Create Your Account</h2>
+      <p class="sub">Save favorites, track applications & get personalized matches</p>
+      <div class="form-group"><label>Full Name</label><input type="text" placeholder="Your name"></div>
+      <div class="form-group"><label>Email Address</label><input type="email" placeholder="you@email.com"></div>
+      <div class="form-group"><label>Password</label><input type="password" placeholder="Create a password"></div>
+      <div class="form-group"><label>Zip Code</label><input type="text" placeholder="e.g. 94566"></div>
+      <div class="signup-btn">Create Account →</div>
+      <p style="font-size:11px;color:var(--gray);text-align:center;margin-top:16px;">Already have an account? <span style="color:var(--teal-dark);font-weight:600;cursor:pointer;">Sign In</span></p>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="db-badge">🐾 Powered by <a href="https://docs.google.com/spreadsheets/d/1TGidtMn_HhAGe7CFGrRg-FTGK02f-gMPf5BiS2C7A7o/edit" target="_blank">Google Sheets</a> • Data syncs nightly from Valley Humane Society</div>
+
+<script>
+// ====== PURRFECT MATCH - GOOGLE SHEETS DATABASE ENGINE ======
+const SHEET_ID = '1TGidtMn_HhAGe7CFGrRg-FTGK02f-gMPf5BiS2C7A7o';
+const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Sheet1`;
+
+let allPets = [];
+
+// Fetch data from Google Sheets
+async function fetchPets() {
+  try {
+    const res = await fetch(SHEET_URL);
+    const text = await res.text();
+    // Strip JSONP wrapper: "/*O_o*/\ngoogle.visualization.Query.setResponse(...);"
+    const jsonStr = text.match(/google\.visualization\.Query\.setResponse\((.*)\);?$/s);
+    if (!jsonStr) throw new Error('Invalid response format');
+    const data = JSON.parse(jsonStr[1]);
+    
+    const cols = data.table.cols.map(c => c.label);
+    const rows = data.table.rows;
+    
+    allPets = rows.map(row => {
+      const pet = {};
+      row.c.forEach((cell, i) => {
+        const key = cols[i];
+        pet[key] = cell ? (cell.v || '') : '';
+      });
+      return pet;
+    }).filter(p => p['Status'] === 'available' || p['Status'] === '');
+    
+    renderPetGrid(allPets);
+  } catch (err) {
+    console.error('Fetch error:', err);
+    document.getElementById('pet-grid').innerHTML = `
+      <div style="text-align:center;padding:40px;grid-column:1/-1;">
+        <div style="font-size:48px;margin-bottom:12px;">😿</div>
+        <h3 style="margin-bottom:8px;">Unable to load pets</h3>
+        <p style="font-size:13px;color:var(--gray);margin-bottom:16px;">The database might not be published yet. Go to Google Sheets → File → Share → Publish to Web.</p>
+        <button onclick="fetchPets()" style="padding:10px 24px;background:var(--teal);color:#fff;border:none;border-radius:20px;font-weight:700;cursor:pointer;">🔄 Retry</button>
+      </div>`;
+  }
+}
+
+// Render pet cards
+function renderPetGrid(pets) {
+  const grid = document.getElementById('pet-grid');
+  if (pets.length === 0) {
+    grid.innerHTML = '<div style="text-align:center;padding:40px;grid-column:1/-1;"><div style="font-size:48px;margin-bottom:12px;">🔍</div><p style="color:var(--gray);">No pets match your filters. Try adjusting your search.</p></div>';
+    return;
+  }
+  grid.innerHTML = pets.map(pet => `
+    <div class="pet-card" onclick="showDetail('${pet.ID}')">
+      <div class="pet-img-wrap">
+        <img src="${pet['Image URL (Main)'] || ''}" alt="${pet.Name}" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\'emoji\'>🐾</span>'+this.parentElement.innerHTML;">
+      </div>
+      <div class="match-pill">${pet['Compatibility Score']}%</div>
+      <div class="pet-body">
+        <div class="pet-name">${pet.Name}</div>
+        <div class="pet-breed">${pet.Breed}</div>
+        <div class="pet-dist">📍 ${pet.Location}</div>
+        <div class="pet-meta"><span class="pet-fee">${pet['Adoption Fee']}</span></div>
+        <div class="pet-chips">
+          <span class="chip chip-energy">${pet.Energy}</span>
+          <span class="chip chip-size">${pet.Species === 'cat' ? '🐱 Cat' : '🐶 Dog'}</span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// Filter pets
+function filterPets() {
+  const search = document.getElementById('pet-search').value.toLowerCase();
+  const species = document.getElementById('filter-species').value;
+  const size = document.getElementById('filter-size').value;
+  const age = document.getElementById('filter-age').value;
+  
+  let filtered = allPets.filter(pet => {
+    if (search && !pet.Name.toLowerCase().includes(search) && !pet.Breed.toLowerCase().includes(search)) return false;
+    if (species && pet.Species !== species) return false;
+    if (size && !pet.Size.includes(size) && !pet.Weight.toLowerCase().includes(size.toLowerCase())) return false;
+    if (age && !pet.Age.toLowerCase().includes(age.toLowerCase())) return false;
+    return true;
+  });
+  
+  renderPetGrid(filtered);
+}
+
+// Show pet detail
+function showDetail(petId) {
+  const pet = allPets.find(p => p.ID === petId);
+  if (!pet) return;
+  
+  // Fill the detail page
+  document.getElementById('detail-img').innerHTML = pet['Image URL (Main)'] 
+    ? `<img src="${pet['Image URL (Main)']}" alt="${pet.Name}" loading="lazy">` 
+    : '🐾';
+  
+  const altImg = pet['Image URL (Alt)'];
+  document.getElementById('detail-thumbs').innerHTML = pet['Image URL (Main)'] 
+    ? `<img src="${pet['Image URL (Main)']}" alt="photo" loading="lazy">${altImg ? `<img src="${altImg}" alt="photo" loading="lazy">` : ''}`
+    : '';
+  
+  document.getElementById('detail-name').textContent = pet.Name;
+  document.getElementById('detail-breed').textContent = pet.Breed;
+  
+  const score = pet['Compatibility Score'] || 0;
+  document.getElementById('detail-ring').style.background = `conic-gradient(var(--teal) 0% ${score}%, #e5e7eb ${score}% 100%)`;
+  document.getElementById('detail-score').textContent = score + '%';
+  document.getElementById('detail-match-title').textContent = score + '% Compatibility Match!';
+  document.getElementById('detail-match-text').textContent = pet['Compatibility Text'] || '';
+  
+  // Build attributes grid
+  const attrs = [
+    ['Weight', pet.Weight], ['Energy', pet.Energy], ['Age', pet.Age],
+    ['Gender', pet.Gender], ['Coat', pet.Coat], ['Adoption Fee', pet['Adoption Fee']],
+    ['Includes', pet.Includes], ['Location', pet.Location]
+  ].filter(([k, v]) => v && v !== 'Unknown');
+  
+  document.getElementById('detail-attrs').innerHTML = attrs.map(([k, v]) => 
+    `<div class="attr-item"><div class="al">${k}</div><div class="av">${v}</div></div>`
+  ).join('');
+  
+  // Actions
+  document.getElementById('detail-actions').innerHTML = `
+    <a href="${pet['Adoption URL'] || 'https://valleyhumane.org/adopt/adoption/'}" target="_blank" style="background:linear-gradient(135deg,var(--teal),var(--teal-dark));color:#fff;">🐾 Apply to Adopt →</a>
+    <span style="background:#fff5f5;color:var(--coral);">♥ Add to Wishlist</span>
+  `;
+  
+  // Story
+  document.getElementById('detail-story-title').textContent = '📖 ' + pet.Name.replace(/[^a-zA-Z\s]/g, '').trim() + "'s Story";
+  document.getElementById('detail-story').textContent = pet.Story || 'Contact the shelter to learn more about this wonderful pet!';
+  
+  // Shelter
+  document.getElementById('detail-shelter-name').textContent = pet.Shelter || 'Valley Humane Society';
+  
+  // Show the detail page, hide find page
+  document.getElementById('pet-detail-page').style.display = 'block';
+  document.querySelector('.pg-find').style.display = 'none';
+  window.scrollTo(0, 0);
+}
+
+function hideDetail() {
+  document.getElementById('pet-detail-page').style.display = 'none';
+  document.querySelector('.pg-find').style.display = 'block';
+}
+
+// Load pets when Find page is shown
+document.addEventListener('DOMContentLoaded', () => {
+  fetchPets();
+  // Re-fetch when navigating to Find page
+  document.getElementById('pg-find').addEventListener('change', function() {
+    if (this.checked && allPets.length === 0) fetchPets();
+  });
+});
+</script>
+
+</body>
+</html>
